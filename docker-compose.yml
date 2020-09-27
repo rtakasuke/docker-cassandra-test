@@ -1,0 +1,7 @@
+version: '3'
+services:
+  cassandra:
+    build: ./cassandra/
+    volumes:
+      - ./cassandra/db:/var/lib/cassandra
+    container_name: cassandra-test
