@@ -1,16 +1,27 @@
 version: '3'
 services:
-  cassandra:
+  cassandra1:
     build: ./cassandra/
     volumes:
-      - ./cassandra/db/var:/var/lib/cassandra
-    container_name: cassandra-test
-  cassandra-test-load-data:
+      - ./cassandra/db/var/cassandra1:/var/lib/cassandra
+    container_name: cassandra-test1
+  cassandra2:
+    build: ./cassandra/
+    volumes:
+      - ./cassandra/db/var/cassandra2:/var/lib/cassandra
+    container_name: cassandra-test2
+    environment:
+      - CASSANDRA_SEEDS=cassandra1
+    depends_on:
+      - cassandra1
+  load-data:
     build: ./cassandra/
     volumes:
       - ./cassandra/db/simple.cql:/simple.cql
     container_name: cassandra-test-load-data
-    entrypoint: ["dockerize", "-timeout", "60s", "-wait", "tcp://cassandra-test:9042"]
-    command: ["cqlsh", "cassandra", "-f", "/simple.cql"]
+    environment:
+      - CASSANDRA_SEEDS=cassandra1
+    entrypoint: ["dockerize", "-timeout", "2m", "-wait", "tcp://cassandra-test1:9042", "-wait", "tcp://cassandra-test2:9042"]
+    command: ["cqlsh", "cassandra-test1", "-f", "/simple.cql"]
     depends_on:
-      - cassandra
+      - cassandra1

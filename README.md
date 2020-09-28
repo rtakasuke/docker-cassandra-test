@@ -5,7 +5,7 @@ Cassandra test environment with small sample data.
 ```
 > docker-compose build
 > docker-compose up -d
-> dk exec -it cassandra-test cqlsh
+> dk exec -it cassandra-test1 cqlsh
 ```
 
 ## Impremented sample tables
