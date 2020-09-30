@@ -5,9 +5,6 @@ services:
     volumes:
       - ./cassandra/db/var/cassandra1:/var/lib/cassandra
     container_name: cassandra-test1
-    environment:
-      - MAX_HEAP_SIZE=256M
-      - HEAP_NEWSIZE=128M
   cassandra2:
     build: ./cassandra/
     volumes:
@@ -15,8 +12,6 @@ services:
     container_name: cassandra-test2
     environment:
       - CASSANDRA_SEEDS=cassandra1
-      - MAX_HEAP_SIZE=256M
-      - HEAP_NEWSIZE=128M
     depends_on:
       - cassandra1
   cassandra3:
@@ -26,10 +21,8 @@ services:
     container_name: cassandra-test3
     environment:
       - CASSANDRA_SEEDS=cassandra1
-      - MAX_HEAP_SIZE=256M
-      - HEAP_NEWSIZE=128M
     depends_on:
-      - cassandra2
+      - cassandra1
   load-data:
     build: ./cassandra/
     volumes:
@@ -37,8 +30,6 @@ services:
     container_name: cassandra-test-load-data
     environment:
       - CASSANDRA_SEEDS=cassandra1
-      - MAX_HEAP_SIZE=256M
-      - HEAP_NEWSIZE=128M
     entrypoint:
       - dockerize
       - -timeout

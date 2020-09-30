@@ -1,5 +1,8 @@
 FROM cassandra:3.0
 
+ENV MAX_HEAP_SIZE 256M
+ENV HEAP_NEWSIZE 128M
+
 # To wait for cassandra startup from docker-compose
 RUN apt-get update && apt-get install -y wget
 ENV DOCKERIZE_VERSION v0.6.1
