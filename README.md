@@ -1,3 +1,5 @@
+![lint](https://github.com/rtakasuke/docker-cassandra-test/workflows/lint/badge.svg)
+
 # docker-cassandra-test
 Cassandra test environment with small sample data.
 
